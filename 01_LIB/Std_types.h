@@ -7,7 +7,7 @@
 ** **************************************************************************************/
 #ifndef _STD_TYPES_H
 #define _STD_TYPES_H
-
+  /* Defined STD types */
   typedef unsigned char             u8;
   typedef signed   char             s8;
   typedef unsigned short int        u16;
@@ -18,6 +18,6 @@
   typedef signed   long long int    s64;
   typedef float                     f32;
   typedef double                    f64;
-  typedef u8 *                      pu8;  
+  typedef u8 *                      pu8; 
   
 #endif

@@ -8,12 +8,43 @@
 #ifndef _PORT_CFG_H
 #define _PORT_CFG_H
 
-  /* Write Down Pins Initial Directions */
-  /* You have 32 Pins from pin0 to pin31 ... To configure Directions  :Write 0 to make the pin input and 1 to make the pin output */
-  #define PORT_u32DIR           0b00000000000000000000000000000000
-  /* You have 32 Pins from pin0 to pin31 ... To configure input modes :Write 0 to make the pin high impendance and 1 to make the pin pull up */
-  #define PORT_u32VAL           0b00000000000000000000000000000000
-
-
+/* Select the mode of each pin */
+/* Options:
+    PORT_u8INPUT_HI    for input and high impedence
+    PORT_u8INPUT_PU    for input and pull up
+    PORT_u8OUTPUT      for output
+                                                          */
+#define PORT_u8MODE_PIN0              PORT_u8INPUT_HI
+#define PORT_u8MODE_PIN1              PORT_u8INPUT_HI
+#define PORT_u8MODE_PIN2              PORT_u8INPUT_HI
+#define PORT_u8MODE_PIN3              PORT_u8INPUT_HI
+#define PORT_u8MODE_PIN4              PORT_u8INPUT_HI
+#define PORT_u8MODE_PIN5              PORT_u8INPUT_HI
+#define PORT_u8MODE_PIN6              PORT_u8INPUT_HI
+#define PORT_u8MODE_PIN7              PORT_u8INPUT_HI
+#define PORT_u8MODE_PIN8              PORT_u8INPUT_HI
+#define PORT_u8MODE_PIN9              PORT_u8INPUT_HI
+#define PORT_u8MODE_PIN10             PORT_u8INPUT_HI
+#define PORT_u8MODE_PIN11             PORT_u8INPUT_HI
+#define PORT_u8MODE_PIN12             PORT_u8INPUT_HI
+#define PORT_u8MODE_PIN13             PORT_u8INPUT_HI
+#define PORT_u8MODE_PIN14             PORT_u8INPUT_HI
+#define PORT_u8MODE_PIN15             PORT_u8INPUT_HI
+#define PORT_u8MODE_PIN16             PORT_u8INPUT_HI
+#define PORT_u8MODE_PIN17             PORT_u8INPUT_HI
+#define PORT_u8MODE_PIN18             PORT_u8INPUT_HI
+#define PORT_u8MODE_PIN19             PORT_u8INPUT_HI
+#define PORT_u8MODE_PIN20             PORT_u8INPUT_HI
+#define PORT_u8MODE_PIN21             PORT_u8INPUT_HI
+#define PORT_u8MODE_PIN22             PORT_u8INPUT_HI
+#define PORT_u8MODE_PIN23             PORT_u8INPUT_HI
+#define PORT_u8MODE_PIN24             PORT_u8INPUT_HI
+#define PORT_u8MODE_PIN25             PORT_u8INPUT_HI
+#define PORT_u8MODE_PIN26             PORT_u8INPUT_HI
+#define PORT_u8MODE_PIN27             PORT_u8INPUT_HI
+#define PORT_u8MODE_PIN28             PORT_u8INPUT_HI
+#define PORT_u8MODE_PIN29             PORT_u8INPUT_HI
+#define PORT_u8MODE_PIN30             PORT_u8INPUT_HI
+#define PORT_u8MODE_PIN31             PORT_u8INPUT_HI
 
 #endif
