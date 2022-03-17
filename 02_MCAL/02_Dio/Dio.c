@@ -34,8 +34,8 @@ Dio_tenuStatus Dio_enuWriteChannel(u8 Copy_u8ChannelId, u8 Copy_u8ChannelLevel)
   }/* else if */
   else
   {
-    Loc_u8Port = Copy_u8ChannelId / 8;
-    Loc_u8Pin  = Copy_u8ChannelId % 8;
+    Loc_u8Port = Copy_u8ChannelId / DIO_u8PORT_SIZE;
+    Loc_u8Pin  = Copy_u8ChannelId % DIO_u8PORT_SIZE;
     switch(Loc_u8Port)
     {
       case DIO_u8A:
@@ -97,8 +97,8 @@ Dio_tenuStatus Dio_enuReadChannel(u8 Copy_u8ChannelId, pu8 Add_pu8ChannelLevel)
   }/* if */
   else
   {
-    Loc_u8Port = Copy_u8ChannelId / 8;
-    Loc_u8Pin  = Copy_u8ChannelId % 8;
+    Loc_u8Port = Copy_u8ChannelId / DIO_u8PORT_SIZE;
+    Loc_u8Pin  = Copy_u8ChannelId % DIO_u8PORT_SIZE;
     switch(Loc_u8Port)
     {
       case DIO_u8A:
@@ -199,8 +199,8 @@ Dio_tenuStatus Dio_enuFlipChannel(u8 Copy_u8ChannelId)
   }/* if */
   else
   {
-    Loc_u8Port = Copy_u8ChannelId / 8;
-    Loc_u8Pin  = Copy_u8ChannelId % 8;
+    Loc_u8Port = Copy_u8ChannelId / DIO_u8PORT_SIZE;
+    Loc_u8Pin  = Copy_u8ChannelId % DIO_u8PORT_SIZE;
     switch(Loc_u8Port)
     {
       case DIO_u8A:

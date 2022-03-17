@@ -19,5 +19,5 @@
   typedef float                     f32;
   typedef double                    f64;
   typedef u8 *                      pu8; 
-  
+  #define NULL                      ((void*)0)
 #endif

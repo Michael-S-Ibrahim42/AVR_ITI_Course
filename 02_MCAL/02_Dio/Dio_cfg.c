@@ -11,6 +11,5 @@
 /* Fns Implementation */
 void Dio_vidReportError(void)
 {
-  u8 x;
-  x = Dio_u8DET();
+  Dio_u8DET();
 }/* Port_vidReportError */

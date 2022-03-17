@@ -29,8 +29,8 @@ Port_tenuStatus Port_enuSetPinDirection (u8 Copy_u8PinNumber, u8 Copy_u8PinDirec
   }/* else if */
   else 
   {
-    Loc_u8Port = Copy_u8PinNumber / 8;
-    Loc_u8Pin  = Copy_u8PinNumber % 8;
+    Loc_u8Port = Copy_u8PinNumber / PORT_u8PORT_SIZE;
+    Loc_u8Pin  = Copy_u8PinNumber % PORT_u8PORT_SIZE;
     switch(Loc_u8Port)
     {
       case(PORT_u8A):
@@ -96,8 +96,8 @@ Port_tenuStatus Port_enuSetPinMode(u8 Copy_u8PinNumber, u8 Copy_u8PinMode)
   }/* else if */
   else 
   {
-    Loc_u8Port = Copy_u8PinNumber / 8;
-    Loc_u8Pin  = Copy_u8PinNumber % 8;
+    Loc_u8Port = Copy_u8PinNumber / PORT_u8PORT_SIZE;
+    Loc_u8Pin  = Copy_u8PinNumber % PORT_u8PORT_SIZE;
     switch(Loc_u8Port)
     {
       case(PORT_u8A):

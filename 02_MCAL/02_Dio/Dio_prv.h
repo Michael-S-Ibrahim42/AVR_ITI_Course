@@ -14,9 +14,10 @@
   #define DIO_u8B                           1
   #define DIO_u8C                           2
   #define DIO_u8D                           3
+  #define DIO_u8PORT_SIZE                   8
   /* **************************** Ports High&Low levels **************************** */
-  #define DIO_u8PORT_LOW       0x00
-  #define DIO_u8PORT_HIGH      0xFF
+  #define DIO_u8PORT_LOW                    0x00
+  #define DIO_u8PORT_HIGH                   0xFF
   /* **************************** Bit Utils MACROS **************************** */
   #define DIO_SET_BIT(REG, BIT)             (REG |=  (1<<BIT))
   #define DIO_CLR_BIT(REG, BIT)             (REG &= ~(1<<BIT))
