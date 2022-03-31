@@ -102,9 +102,15 @@
     /* 
         Fn: Display Numbers on the LCD
         Return: Void
-        Parameter1: the number, available options are the digits
+        Parameter1: the number
     */
-    void LCD_vidDisplayNumber(u8 Copy_u8Number);
+    void LCD_vidDisplayNumber(u16 Copy_u16Number);
+    /* 
+        Fn: Display Float Numbers on the LCD
+        Return: Void
+        Parameter1: the number
+    */
+    void LCD_vidDisplayFloatNum(f64 Copy_f64Number);
     /* 
         Fn: Send custom characters to the LCD
         Return: Void

@@ -18,6 +18,7 @@
   typedef signed   long long int    s64;
   typedef float                     f32;
   typedef double                    f64;
-  typedef u8 *                      pu8; 
+  typedef u8*                       pu8; 
+  typedef u16*                      pu16; 
   #define NULL                      ((void*)0)
 #endif

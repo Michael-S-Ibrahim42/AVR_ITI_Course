@@ -11,6 +11,8 @@
   #define PORT_u8INPUT_HI                              0
   #define PORT_u8INPUT_PU                              1
   #define PORT_u8OUTPUT                                2
+  /* Fn Return values */
+  #define PORT_u8NORMAL_RET                            0
   /* ******************************************************************************** */
   /* **************************** Ports and Channels_Max **************************** */
   #define PORT_u8MAN_PIN_NO                           31

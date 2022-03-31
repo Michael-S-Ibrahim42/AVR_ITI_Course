@@ -225,6 +225,5 @@ Dio_tenuStatus Dio_enuFlipChannel(u8 Copy_u8ChannelId)
 
 u8 Dio_u8DET(void)
 {
-	u8 x = 0;
-  return(x);
+  return(DIO_u8NORMAL_RET);
 }/* Dio_u8DET */

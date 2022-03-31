@@ -28,7 +28,19 @@
     #define LCD_u8NUM_DIV                       10
     /* ASCII Shifter */
     #define LCD_u8LCD_ASCII_SHIFT               48
-    
+    /* MCU clock */
+    #define  F_CPU                              16000000
+    /* Delays */
+    #define LCD_u8INIT_CMD1_DELAY               15
+    #define LCD_u8INIT_CMD2_DELAY               5
+    #define LCD_u8INIT_CMD3_DELAY               100
+    #define LCD_u8DEFAULT_BIG_CMD_DELAY         5  
+    #define LCD_u8DEFAULT_SMALL_CMD_DELAY       50
+    /* Counter */
+    #define LCD_u8CUSTOM_COUNTER_INIT           0
+    #define LCD_u8CUSTOM_COUNTER_MAX           8
+    /* String Terminator */
+    #define LCD_u8NULL_CHAR                     '\0'
     /* ************************************************************************ */
     /* ************************************************************************ */
     

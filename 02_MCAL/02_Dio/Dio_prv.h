@@ -15,6 +15,8 @@
   #define DIO_u8C                           2
   #define DIO_u8D                           3
   #define DIO_u8PORT_SIZE                   8
+  /* Fn Return Values */
+  #define DIO_u8NORMAL_RET                  0
   /* **************************** Ports High&Low levels **************************** */
   #define DIO_u8PORT_LOW                    0x00
   #define DIO_u8PORT_HIGH                   0xFF

@@ -9,7 +9,6 @@
 /* ************************************************************************ */
 /* **************************** Headers Inclusion ************************* */
 #include <util/delay.h>
-#define F_CPU             16000000
 #include "Std_types.h"
 #include "Dio.h"
 #include "LCD.h"
@@ -23,11 +22,11 @@
 void LCD_vidInit(void)
 {
   /* Basic Initializing steps */
-  _delay_ms(15);
+  _delay_ms(LCD_u8INIT_CMD1_DELAY);
   LCD_vidSendCommand(LCD_u8FN_DL8_N1_F8);
-  _delay_ms(5);
+  _delay_ms(LCD_u8INIT_CMD2_DELAY);
   LCD_vidSendCommand(LCD_u8FN_DL8_N1_F8);
-  _delay_us(100);
+  _delay_us(LCD_u8INIT_CMD3_DELAY);
   LCD_vidSendCommand(LCD_u8FN_DL8_N1_F8);
   /* Fn Set; Data lines number of bits(4 or 8) - Number of lines(1 or 2) - Font size(5*8 or 5*11) */
   LCD_vidSendCommand(LCD_u8FN_DL8_N2_F8);
@@ -56,11 +55,11 @@ void LCD_vidSendCommand(u8 Copy_u8Command)
   Dio_enuWriteChannel(LCD_u8E, DIO_u8PIN_LOW);
   if((Copy_u8Command == LCD_u8RET_HOME) || (Copy_u8Command == LCD_u8CLEAR))
   {
-    _delay_ms(5);
+    _delay_ms(LCD_u8DEFAULT_BIG_CMD_DELAY);
   }/* if */
   else
   {
-    _delay_us(50);
+    _delay_us(LCD_u8DEFAULT_SMALL_CMD_DELAY);
   }
 }/* LCD_vidSendCommand */
 void LCD_vidDisplayCharacter(u8 Copy_u8Character)
@@ -77,19 +76,93 @@ void LCD_vidDisplayCharacter(u8 Copy_u8Character)
   Dio_enuWriteChannel(LCD_u8DB6, (Copy_u8Character>>LCD_u8BIT6) & LCD_u8CMD_SPLIT);
   Dio_enuWriteChannel(LCD_u8DB7, (Copy_u8Character>>LCD_u8BIT7) & LCD_u8CMD_SPLIT);
   Dio_enuWriteChannel(LCD_u8E, DIO_u8PIN_LOW); 
-  _delay_us(50); 
+  _delay_us(LCD_u8DEFAULT_SMALL_CMD_DELAY); 
 }/* LCD_vidDisplayCharacter */
 
-void LCD_vidDisplayNumber(u8 Copy_u8Number)
+void LCD_vidDisplayNumber(u16 Copy_u16Number)
 {
-  u8 Loc_u8Display = LCD_u8LCD_NUM_INIT;
-  while(Copy_u8Number)
+	u16 Loc_u16Temp = 0;
+	u8 Loc_u8Zeros = 0;
+  u16 Loc_u16Display = (u16)LCD_u8LCD_NUM_INIT;
+  while(Copy_u16Number)
   {
-    Loc_u8Display = Copy_u8Number % LCD_u8NUM_DIV;
-    LCD_vidDisplayCharacter(Loc_u8Display+LCD_u8LCD_ASCII_SHIFT);
-    Copy_u8Number /= LCD_u8NUM_DIV;
+    Loc_u16Display = Copy_u16Number % LCD_u8NUM_DIV;
+    Loc_u16Temp = Loc_u16Display + Loc_u16Temp*10;
+    if(Loc_u16Temp == 0)
+    {
+    	Loc_u8Zeros++;
+    }
+    Copy_u16Number /= LCD_u8NUM_DIV;
   }/* while */
+  while(Loc_u16Temp)
+  {
+    Loc_u16Display = Loc_u16Temp % LCD_u8NUM_DIV;
+    LCD_vidDisplayCharacter(Loc_u16Display+LCD_u8LCD_ASCII_SHIFT);
+    Loc_u16Temp /= LCD_u8NUM_DIV;
+  }/* while */
+  while(Loc_u8Zeros)
+  {
+	  LCD_vidDisplayCharacter('0');
+	  Loc_u8Zeros--;
+  }
 }/* LCD_vidDisplayNumber */
+void LCD_vidDisplayFloatNum(f64 Copy_f64Number)
+{
+  u16 Loc_u16Number = (u16)Copy_f64Number;
+  f32 Loc_f32Fraction = Copy_f64Number - Loc_u16Number;
+	u16 Loc_u16Temp = 0;
+	u8 Loc_u8Zeros = 0;
+  u16 Loc_u16Display = (u16)LCD_u8LCD_NUM_INIT;
+  while(Loc_u16Number)
+  {
+    Loc_u16Display = Loc_u16Number % LCD_u8NUM_DIV;
+    Loc_u16Temp = Loc_u16Display + Loc_u16Temp*10;
+    if(Loc_u16Temp == 0)
+    {
+    	Loc_u8Zeros++;
+    }
+    Loc_u16Number /= LCD_u8NUM_DIV;
+  }/* while */
+  while(Loc_u16Temp)
+  {
+    Loc_u16Display = Loc_u16Temp % LCD_u8NUM_DIV;
+    LCD_vidDisplayCharacter(Loc_u16Display+LCD_u8LCD_ASCII_SHIFT);
+    Loc_u16Temp /= LCD_u8NUM_DIV;
+  }/* while */
+  while(Loc_u8Zeros)
+  {
+	  LCD_vidDisplayCharacter('0');
+	  Loc_u8Zeros--;
+  }
+  LCD_vidDisplayCharacter('.');
+	
+  Loc_u16Number = (u16)(Loc_f32Fraction * 100);
+  Loc_u16Temp = 0;
+  Loc_u8Zeros = 0;
+  Loc_u16Display = (u16)LCD_u8LCD_NUM_INIT;
+  while(Loc_u16Number)
+  {
+    Loc_u16Display = Loc_u16Number % LCD_u8NUM_DIV;
+    Loc_u16Temp = Loc_u16Display + Loc_u16Temp*10;
+    if(Loc_u16Temp == 0)
+    {
+    	Loc_u8Zeros++;
+    }
+    Loc_u16Number /= LCD_u8NUM_DIV;
+  }/* while */
+  while(Loc_u16Temp)
+  {
+    Loc_u16Display = Loc_u16Temp % LCD_u8NUM_DIV;
+    LCD_vidDisplayCharacter(Loc_u16Display+LCD_u8LCD_ASCII_SHIFT);
+    Loc_u16Temp /= LCD_u8NUM_DIV;
+  }/* while */
+  while(Loc_u8Zeros)
+  {
+	  LCD_vidDisplayCharacter('0');
+	  Loc_u8Zeros--;
+  }  
+}/* LCD_vidDisplayFloatNum */
+
 /* 
     Fn: Send custom characters to the LCD
     Return: Void
@@ -100,7 +173,7 @@ void LCD_vidCreateCustomCharacter(u8 Copy_u8CustomCharAdd, pu8 Copy_pu8CustomCha
 {
   u8 Loc_u8Counter;
   LCD_vidSendCommand(Copy_u8CustomCharAdd|LCD_u8CGRAM_ADD_SET);
-  for(Loc_u8Counter = 0; Loc_u8Counter < 8; Loc_u8Counter++)
+  for(Loc_u8Counter = LCD_u8CUSTOM_COUNTER_INIT; Loc_u8Counter < LCD_u8CUSTOM_COUNTER_MAX; Loc_u8Counter++)
   {
     LCD_vidDisplayCharacter(*Copy_pu8CustomCharacter);
     Copy_pu8CustomCharacter++;
@@ -118,7 +191,7 @@ void LCD_vidGoTo(u8 Copy_u8Row, u8 Copy_u8Column)
 */
 void LCD_vidDisplayString(pu8 Copy_pu8String)
 {
-  while(*Copy_pu8String != '\0')
+  while(*Copy_pu8String != LCD_u8NULL_CHAR)
   {
     LCD_vidDisplayCharacter(*Copy_pu8String);
     Copy_pu8String++;

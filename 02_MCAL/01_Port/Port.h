@@ -56,9 +56,9 @@
   #define PORT_u8INPUT_PULL_UP    1  
   #define PORT_u8OUTPUT           2
     /* ************************* Fns Prototypes ************************* */
-  Port_tenuStatus Port_enuSetPinDirection (u8 Copy_u8PinNumber, u8 Copy_u8PinDirection );
-  Port_tenuStatus Port_enuSetPinMode      (u8 Copy_u8PinNumber, u8 Copy_u8PinMode      );
-  void            Port_vidInit            (void                                        );
+  Port_tenuStatus Port_enuSetPinDirection(u8 Copy_u8PinNumber, u8 Copy_u8PinDirection);
+  Port_tenuStatus Port_enuSetPinMode(u8 Copy_u8PinNumber, u8 Copy_u8PinMode);
+  void Port_vidInit (void);
 
 
 #endif
