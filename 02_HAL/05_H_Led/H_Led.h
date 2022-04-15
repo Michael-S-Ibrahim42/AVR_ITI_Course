@@ -11,7 +11,7 @@
   #include "H_Led_cfg.h"
   /* ********************************************************************************* */
   /* **************************** MACROS ********************************************* */
-  /* Led levels */
+  /* Led levels */ 
   #define H_LED_u8ON                                    0
   #define H_LED_u8OFF                                   1
   /* led connection active state */                 

@@ -21,4 +21,8 @@
   typedef u8*                       pu8; 
   typedef u16*                      pu16; 
   #define NULL                      ((void*)0)
+  /* Common initial values */
+  #define ZERO_INIT                 0
+  /* pointer to fn */
+  typedef void (* tpfCallbackFn)(void);
 #endif

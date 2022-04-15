@@ -14,14 +14,14 @@
     PORT_u8INPUT_PU    for input and pull up
     PORT_u8OUTPUT      for output
                                                           */
-#define PORT_u8MODE_PIN0              PORT_u8INPUT_HI
-#define PORT_u8MODE_PIN1              PORT_u8INPUT_PU
-#define PORT_u8MODE_PIN2              PORT_u8INPUT_PU
-#define PORT_u8MODE_PIN3              PORT_u8INPUT_PU
-#define PORT_u8MODE_PIN4              PORT_u8INPUT_PU
-#define PORT_u8MODE_PIN5              PORT_u8INPUT_PU
-#define PORT_u8MODE_PIN6              PORT_u8INPUT_PU
-#define PORT_u8MODE_PIN7              PORT_u8INPUT_PU
+#define PORT_u8MODE_PIN0              PORT_u8OUTPUT
+#define PORT_u8MODE_PIN1              PORT_u8OUTPUT
+#define PORT_u8MODE_PIN2              PORT_u8OUTPUT
+#define PORT_u8MODE_PIN3              PORT_u8OUTPUT
+#define PORT_u8MODE_PIN4              PORT_u8OUTPUT
+#define PORT_u8MODE_PIN5              PORT_u8OUTPUT
+#define PORT_u8MODE_PIN6              PORT_u8OUTPUT
+#define PORT_u8MODE_PIN7              PORT_u8OUTPUT
 #define PORT_u8MODE_PIN8              PORT_u8OUTPUT
 #define PORT_u8MODE_PIN9              PORT_u8OUTPUT
 #define PORT_u8MODE_PIN10             PORT_u8OUTPUT

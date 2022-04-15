@@ -14,7 +14,7 @@
   #define DIO_u8PORT1          1
   #define DIO_u8PORT2          2
   #define DIO_u8PORT3          3
-  /* Pins numbers */
+  /* Pins numbers */    
   #define DIO_u8PIN0           0
   #define DIO_u8PIN1           1
   #define DIO_u8PIN2           2
