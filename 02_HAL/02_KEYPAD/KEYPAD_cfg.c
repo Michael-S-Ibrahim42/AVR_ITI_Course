@@ -10,6 +10,7 @@
 #include "Std_types.h"
 /* MCAL headers */
 #include "Dio.h"
+#include "Switch.h"
 /* Own headers */
 #include "Keypad.h"
 #include "Keypad_cfg.h"
@@ -19,26 +20,17 @@
 /* ////////////////////////// Global Variables /////////////////////////////////// */
 const Keypad_tstrConfig Keypad_strConfig = 
 {
-  .Rows[KEYPAD_u8NO_ROWS] = 
-  {
     DIO_u8PIN4,
     DIO_u8PIN5,
     DIO_u8PIN6,
-    DIO_u8PIN7
-  },
-  .Cols[KEYPAD_u8NO_COLS] = 
-  {
+    DIO_u8PIN7,
     SWITCH_u8COL0,
     SWITCH_u8COL1,
     SWITCH_u8COL2,
-    SWITCH_u8COL3
-  },
-  .Keys[KEYPAD_u8NO_ROWS][KEYPAD_u8NO_COLS] =
-  {
-    {'7','8','9','/'},
-    {'4','5','6','*'},
-    {'1','2','3','-'},
-    {'.','0','=','+'} 
-  }
+    SWITCH_u8COL3,
+    '7','8','9','/',
+	'4','5','6','*',
+    '1','2','3','-',
+    '.','0','=','+'
 };
 /* /////////////////////////////////////////////////////////////////////////////// */

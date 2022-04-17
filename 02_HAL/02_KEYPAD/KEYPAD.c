@@ -82,7 +82,7 @@ void Keypad_vidUpdateCurrentKey_R(void)
       if(Loc_enuSwitchState == Switch_enuPressed)
       {
         Loc_u8PressedRow = Loc_u8RowCounter;
-        Keypad_u8PressedKey = Keypad_strConfig.Keys[Loc_u8RowNo][Loc_u8ColNo];
+        Keypad_u8PressedKey = Keypad_strConfig.Keys[Loc_u8PressedRow][Loc_u8PressedCol];
       }/* if */
     }/* for */
   }/* if */

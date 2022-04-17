@@ -11,6 +11,7 @@
 /* OS headers */
 #include "Sched.h"
 /* HAL headers */
+#include "Switch.h"
 #include "Keypad.h"
 /* MCAL headers */
 #include "Port.h"
