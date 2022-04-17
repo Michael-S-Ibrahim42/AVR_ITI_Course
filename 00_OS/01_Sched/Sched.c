@@ -13,6 +13,7 @@
 /* MCAL headers */
 #include "Port.h"
 #include "Dio.h"
+#include "Gpt.h"
 /* Own headers */
 #include "Sched.h"
 #include "Sched_cfg.h"
@@ -46,7 +47,8 @@ void Sched_vidInit(void)
 /* 
 	Description					:				start the scheduler
 	Parameter(s)				:				void
-	Return							:				void	
+	Return							:				void
+	**Caution**					:				The runnables must be registered before start	
 */
 void Sched_vidStart(void)
 {
@@ -109,18 +111,18 @@ static void Sched_vidSched(void)
 	u8 Loc_u8Counter = ZERO_INIT;
 	for(Loc_u8Counter = ZERO_INIT; Loc_u8Counter < SCHED_u8MAX_TASKS; Loc_u8Counter++)
 	{
-		if(Sched_astrTasks[Loc_u8Counter] != NULL)
+		if(Sched_apstrTasks[Loc_u8Counter] != NULL)
 		{
-			if(Sched_astrTasks[Loc_u8Counter]->State == Sched_enuReady)
+			if(Sched_apstrTasks[Loc_u8Counter]->State == Sched_enuReady)
 			{
-				if(Sched_astrTasks[Loc_u8Counter]->FirstDelay == SCHED_u8LAUNCH_TIME)
+				if(Sched_apstrTasks[Loc_u8Counter]->FirstDelay == SCHED_u8LAUNCH_TIME)
 				{
-					Sched_astrTasks[Loc_u8Counter]->State == Sched_enuRunning;
-					(Sched_astrTasks[Loc_u8Counter]->CallbackFn)();/* calling the task */
-					Sched_astrTasks[Loc_u8Counter]->State = Sched_enuReady;
-					Sched_astrTasks[Loc_u8Counter]->FirstDelay = Sched_astrTasks[Loc_u8Counter]->Periodicity;
+					Sched_apstrTasks[Loc_u8Counter]->State = Sched_enuRunning;
+					(Sched_apstrTasks[Loc_u8Counter]->CallbackFn)();/* calling the task */
+					Sched_apstrTasks[Loc_u8Counter]->State = Sched_enuReady;
+					Sched_apstrTasks[Loc_u8Counter]->FirstDelay = Sched_apstrTasks[Loc_u8Counter]->Periodicity;
 				}/* if */
-				Sched_astrTasks[Loc_u8Counter]->FirstDelay--;
+				Sched_apstrTasks[Loc_u8Counter]->FirstDelay--;
 			}/* if */
 		}/* if */
 	}/* for */
