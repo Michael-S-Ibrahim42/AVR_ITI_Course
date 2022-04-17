@@ -5,280 +5,89 @@
 **       SWC         :	KEYPAD
 **       Description :	Keypad module
 ** **************************************************************************************/
-/* *********************************************************************************** */
-/* **************************** Headers Inclusion ************************************ */
-#include "util/delay.h"
+/* **************************** Headers inclusion ************************************ */
 /* STD Headers */
 #include "Std_types.h"
 /* MCAL Headers */
 #include "Dio.h"
 /* Own Headers */
-#include "KEYPAD.h"
-#include "KEYPAD_prv.h"
-#include "KEYPAD_cfg.h"
+#include "Keypad.h"
+#include "Keypad_prv.h"
+#include "Keypad_cfg.h"
+/* /////////////////////////////// Global  /////////////////////////////////////////// */
+extern const Keypad_tstrConfig Keypad_strConfig;
+static u8 Keypad_u8PressedKey;/* static variable to hold the pressed key */
+/* /////////////////////////////////////////////////////////////////////////////////// */
 
-/* *********************************************************************************** */
+/* ///////////////////////////////// Interface Fns ////////////////////////////////// */
 /* 
-  Description: Return the pressed key as character; one of the entered configurations
-  Return     : Error Status, options available in KEYPAD.h under the "Error status" Section
-  Parameter  : address of u8 variable to receive the passed keys value 
-  ****Caution****: You have first to configure the rows pins as output and cols and input pull up
+  Description    :  Return the pressed key as character; one of the entered configurations
+  Parameter1     :  Address of u8 variable to receive the passed keys value 
+  Return         :  Error Status, options available in "Keypad.h" under the "Error type"
 */
-Keypad_tenuStatus Keypad_enuGetKey(pu8 Add_pu8PressedKey)
+Keypad_tenuStatus Keypad_enuGetKey(pu8 Copy_pu8PressedKey)
 {
-
-  Keypad_tenuStatus Loc_enuStatus = Keypad_enuNok;/* Error status variable */
-  u8 Loc_u8DebouncingCounter = 0, DebouncingFlag=0;
-  u8 Loc_u8TempReading = KEYPAD_u8INIT_READ_VAR, Loc_u8Reading = KEYPAD_u8INIT_READ_VAR;
-  u8 Loc_u8Counter = KEYPAD_u8INIT_COUNT;
-  u8 Loc_u8CheckValue = KEYPAD_u8ROWS_CHECK_VAL; 
-  if(Add_pu8PressedKey == NULL)
+  Keypad_tenuStatus Loc_enuError = Keypad_enuOk;
+  if(Copy_pu8PressedKey != NULL)
   {
-    Loc_enuStatus = Keypad_enuNullPtr;
+    *Copy_pu8PressedKey = Keypad_u8PressedKey;
   }/* if */
   else
   {
-    while((Loc_enuStatus == Keypad_enuNok) && (Loc_u8Counter < KEYPAD_u8ROWS_NUM))
-    {
-      Loc_enuStatus = Keypad_enuOk;
-      Loc_u8Reading = KEYPAD_u8INIT_READ_VAR;
-      Dio_enuWriteChannel(KEYPAD_u8R0, ((~(Loc_u8CheckValue<<Loc_u8Counter))&KEYPAD_u8BIT0_MASK)>>KEYPAD_u8ZERO_BIT_SHIFT);
-      Dio_enuWriteChannel(KEYPAD_u8R1, ((~(Loc_u8CheckValue<<Loc_u8Counter))&KEYPAD_u8BIT1_MASK)>>KEYPAD_u8ONE_BIT_SHIFT);
-      Dio_enuWriteChannel(KEYPAD_u8R2, ((~(Loc_u8CheckValue<<Loc_u8Counter))&KEYPAD_u8BIT2_MASK)>>KEYPAD_u8TWO_BIT_SHIFT);
-      Dio_enuWriteChannel(KEYPAD_u8R3, ((~(Loc_u8CheckValue<<Loc_u8Counter))&KEYPAD_u8BIT3_MASK)>>KEYPAD_u8THREE_BIT_SHIFT);
-      DebouncingFlag =0;
-      Loc_u8DebouncingCounter = 0;
-      while(!DebouncingFlag)
-      {
-        Dio_enuReadChannel(KEYPAD_u8C0, &Loc_u8TempReading);
-        if((Loc_u8TempReading == 0x01) && (Loc_u8DebouncingCounter > 0))
-        {
-          Loc_u8DebouncingCounter--;
-        }/* if */
-        else if(Loc_u8TempReading != 0x01)
-        {
-          Loc_u8DebouncingCounter++;
-        }/* else if */
-        if((Loc_u8DebouncingCounter == 0) || (Loc_u8DebouncingCounter >= 25))
-        {
-          DebouncingFlag = 1;
-        }
-        _delay_ms(1);
-      }/* while */
-      Loc_u8Reading |= (Loc_u8TempReading<<KEYPAD_u8ZERO_BIT_SHIFT);
-      DebouncingFlag =0;
-      Loc_u8DebouncingCounter = 10;
-      while(!DebouncingFlag)
-      {
-        Dio_enuReadChannel(KEYPAD_u8C0, &Loc_u8TempReading);
-        if((Loc_u8TempReading == 0x01) && (Loc_u8DebouncingCounter > 0))
-        {
-          Loc_u8DebouncingCounter--;
-        }/* if */
-        else if(Loc_u8TempReading != 0x01)
-        {
-          Loc_u8DebouncingCounter++;
-        }/* else if */
-        if(Loc_u8DebouncingCounter == 0)
-        {
-          DebouncingFlag = 1;
-        }
-		if(Loc_u8DebouncingCounter >= 25)
-		{
-			Loc_u8DebouncingCounter = 10;
-		}
-        _delay_ms(1);
-      }/* while */
-      DebouncingFlag =0;
-      Loc_u8DebouncingCounter = 0;
-      while(!DebouncingFlag)
-      {
-        Dio_enuReadChannel(KEYPAD_u8C1, &Loc_u8TempReading);
-        if((Loc_u8TempReading == 0x01) && (Loc_u8DebouncingCounter > 0))
-        {
-          Loc_u8DebouncingCounter--;
-        }/* if */
-        else if(Loc_u8TempReading != 0x01)
-        {
-          Loc_u8DebouncingCounter++;
-        }/* else if */
-        if((Loc_u8DebouncingCounter == 0) || (Loc_u8DebouncingCounter >= 25))
-        {
-          DebouncingFlag = 1;
-        }
-        _delay_ms(1);
-      }/* while */
-      Loc_u8Reading |= (Loc_u8TempReading<<KEYPAD_u8ONE_BIT_SHIFT);
-      DebouncingFlag =0;
-      Loc_u8DebouncingCounter = 10;
-      while(!DebouncingFlag)
-      {
-        Dio_enuReadChannel(KEYPAD_u8C0, &Loc_u8TempReading);
-        if((Loc_u8TempReading == 0x01) && (Loc_u8DebouncingCounter > 0))
-        {
-          Loc_u8DebouncingCounter--;
-        }/* if */
-        else if(Loc_u8TempReading != 0x01)
-        {
-          Loc_u8DebouncingCounter++;
-        }/* else if */
-        if(Loc_u8DebouncingCounter == 0)
-        {
-          DebouncingFlag = 1;
-        }
-		if(Loc_u8DebouncingCounter >= 25)
-		{
-			Loc_u8DebouncingCounter = 10;
-		}
-        _delay_ms(1);
-      }/* while */
-      DebouncingFlag =0;
-      Loc_u8DebouncingCounter = 0;
-      while(!DebouncingFlag)
-      {
-        Dio_enuReadChannel(KEYPAD_u8C2, &Loc_u8TempReading);
-        if((Loc_u8TempReading == 0x01) && (Loc_u8DebouncingCounter > 0))
-        {
-          Loc_u8DebouncingCounter--;
-        }/* if */
-        else if(Loc_u8TempReading != 0x01)
-        {
-          Loc_u8DebouncingCounter++;
-        }/* else if */
-        if((Loc_u8DebouncingCounter == 0) || (Loc_u8DebouncingCounter >= 25))
-        {
-          DebouncingFlag = 1;
-        }
-        _delay_ms(1);
-      }/* while */
-      Loc_u8Reading |= (Loc_u8TempReading<<KEYPAD_u8TWO_BIT_SHIFT);
-      DebouncingFlag =0;
-      Loc_u8DebouncingCounter = 10;
-      while(!DebouncingFlag)
-      {
-        Dio_enuReadChannel(KEYPAD_u8C0, &Loc_u8TempReading);
-        if((Loc_u8TempReading == 0x01) && (Loc_u8DebouncingCounter > 0))
-        {
-          Loc_u8DebouncingCounter--;
-        }/* if */
-        else if(Loc_u8TempReading != 0x01)
-        {
-          Loc_u8DebouncingCounter++;
-        }/* else if */
-        if(Loc_u8DebouncingCounter == 0)
-        {
-          DebouncingFlag = 1;
-        }
-		if(Loc_u8DebouncingCounter >= 25)
-		{
-			Loc_u8DebouncingCounter = 10;
-		}
-        _delay_ms(1);
-      }/* while */
-      DebouncingFlag =0;
-      Loc_u8DebouncingCounter = 0;
-      while(!DebouncingFlag)
-      {
-        Dio_enuReadChannel(KEYPAD_u8C3, &Loc_u8TempReading);
-        if((Loc_u8TempReading == 0x01) && (Loc_u8DebouncingCounter > 0))
-        {
-          Loc_u8DebouncingCounter--;
-        }/* if */
-        else if(Loc_u8TempReading != 0x01)
-        {
-          Loc_u8DebouncingCounter++;
-        }/* else if */
-        if((Loc_u8DebouncingCounter == 0) || (Loc_u8DebouncingCounter >= 25))
-        {
-          DebouncingFlag = 1;
-        }
-        _delay_ms(1);
-      }/* while */
-  
-      Loc_u8Reading |= (Loc_u8TempReading<<KEYPAD_u8THREE_BIT_SHIFT);
-      DebouncingFlag =0;
-      Loc_u8DebouncingCounter = 10;
-      while(!DebouncingFlag)
-      {
-        Dio_enuReadChannel(KEYPAD_u8C0, &Loc_u8TempReading);
-        if((Loc_u8TempReading == 0x01) && (Loc_u8DebouncingCounter > 0))
-        {
-          Loc_u8DebouncingCounter--;
-        }/* if */
-        else if(Loc_u8TempReading != 0x01)
-        {
-          Loc_u8DebouncingCounter++;
-        }/* else if */
-        if(Loc_u8DebouncingCounter == 0)
-        {
-          DebouncingFlag = 1;
-        }
-		if(Loc_u8DebouncingCounter >= 25)
-		{
-			Loc_u8DebouncingCounter = 10;
-		}
-        _delay_ms(1);
-      }/* while */
-      Loc_u8Reading |= (Loc_u8Counter<<KEYPAD_u8FOUR_BIT_SHIFT);
-      switch(Loc_u8Reading)
-      {
-      case(KEYPAD_u8CASE_R0C0): 
-        *Add_pu8PressedKey = KEYPAD_u8R0C0;
-        break;
-      case(KEYPAD_u8CASE_R0C1): 
-        *Add_pu8PressedKey = KEYPAD_u8R0C1;
-        break;
-      case(KEYPAD_u8CASE_R0C2): 
-        *Add_pu8PressedKey = KEYPAD_u8R0C2;
-        break;
-      case(KEYPAD_u8CASE_R0C3): 
-        *Add_pu8PressedKey = KEYPAD_u8R0C3;
-        break;        
-      case(KEYPAD_u8CASE_R1C0): 
-        *Add_pu8PressedKey = KEYPAD_u8R1C0;
-        break;
-      case(KEYPAD_u8CASE_R1C1):
-        *Add_pu8PressedKey = KEYPAD_u8R1C1;
-        break;
-      case(KEYPAD_u8CASE_R1C2):
-        *Add_pu8PressedKey = KEYPAD_u8R1C2;
-        break;
-      case(KEYPAD_u8CASE_R1C3):
-        *Add_pu8PressedKey = KEYPAD_u8R1C3;
-        break;        
-      case(KEYPAD_u8CASE_R2C0): 
-        *Add_pu8PressedKey = KEYPAD_u8R2C0;
-        break;
-      case(KEYPAD_u8CASE_R2C1):
-        *Add_pu8PressedKey = KEYPAD_u8R2C1;
-        break;
-      case(KEYPAD_u8CASE_R2C2):
-        *Add_pu8PressedKey = KEYPAD_u8R2C2;
-        break;
-      case(KEYPAD_u8CASE_R2C3):
-        *Add_pu8PressedKey = KEYPAD_u8R2C3;
-        break;        
-      case(KEYPAD_u8CASE_R3C0): 
-        *Add_pu8PressedKey = KEYPAD_u8R3C0;
-        break;
-      case(KEYPAD_u8CASE_R3C1):
-        *Add_pu8PressedKey = KEYPAD_u8R3C1;
-        break;
-      case(KEYPAD_u8CASE_R3C2):
-        *Add_pu8PressedKey = KEYPAD_u8R3C2;
-        break;
-      case(KEYPAD_u8CASE_R3C3):
-        *Add_pu8PressedKey = KEYPAD_u8R3C3;
-        break;     
-      default:
-        Loc_enuStatus = Keypad_enuNok;
-      }/* switch */
-
-      Loc_u8Counter++;
-    }/* while */
+    Loc_enuError = Keypad_enuNok;
   }/* else */
-
-  return(Loc_enuStatus);
+  return(Loc_enuError);/* returning the error status */
 }/* Keypad_enuGetKey */
-/* *********************************************************************************** */
-/* *********************************************************************************** */
+/* /////////////////////////////////////////////////////////////////////////////////// */
+/* ////////////////////////////////// Runnable /////////////////////////////////////// */
+/* 
+  Description    :  Runnable to update the pressed key every 500 milliseconds
+  Parameter(s)   :  void
+  Return         :  void
+  **Caution**    :  You have first to configure the rows pins as output and cols as input pull up
+*/  
+void Keypad_vidUpdateCurrentKey_R(void)
+{
+  u8 Loc_u8RowCounter, Loc_u8ColCounter, Loc_u8TempRowCounter;
+  u8 Loc_u8PressedRow, Loc_u8PressedCol, Loc_u8PressedState;
+  Switch_tenuState Loc_enuSwitchState;
+
+  Loc_u8PressedState = FLAG_LOW;
+  // write high on all rows 
+  for(Loc_u8RowCounter = ZERO_INIT; Loc_u8RowCounter < KEYPAD_u8NO_ROWS; Loc_u8RowCounter++){
+    Dio_enuWriteChannel(Keypad_strConfig.Rows[Loc_u8RowCounter], DIO_u8PIN_HIGH ^ KEYPAD_u8ACTIVE_STATE);
+  }/* for */
+  // read which col is pressed
+  for(Loc_u8ColCounter = ZERO_INIT; Loc_u8ColCounter < KEYPAD_u8NO_COLS; Loc_u8ColCounter++)
+  {
+    Switch_enuGetState(Keypad_strConfig.Cols[Loc_u8RowCounter], &Loc_enuSwitchState);
+    if(Loc_enuSwitchState == Switch_enuPressed)
+    {
+      Loc_u8PressedState = FLAG_HIGH;
+      Loc_u8PressedCol = Loc_u8ColCounter;
+    }/* if */
+  }/* if */
+  // loop on rows and read which row is pressed
+  if(Loc_u8PressedState)
+  {
+    for(Loc_u8RowCounter = ZERO_INIT; Loc_u8RowCounter < KEYPAD_u8NO_ROWS; Loc_u8RowCounter++)
+    {
+      for(Loc_u8TempRowCounter = ZERO_INIT; Loc_u8TempRowCounter < KEYPAD_u8NO_ROWS; Loc_u8TempRowCounter++)
+      {
+        Dio_enuWriteChannel(Keypad_strConfig.Rows[Loc_u8RowCounter], DIO_u8PIN_LOW ^ KEYPAD_u8ACTIVE_STATE);
+      }/* for */
+      Dio_enuWriteChannel(Keypad_strConfig.Rows[Loc_u8RowCounter], DIO_u8PIN_HIGH ^ KEYPAD_u8ACTIVE_STATE);
+      Switch_enuGetState(Keypad_strConfig.Cols[Loc_u8RowCounter], &Loc_enuSwitchState);
+      if(Loc_enuSwitchState == Switch_enuPressed)
+      {
+        Loc_u8PressedRow = Loc_u8RowCounter;
+        Keypad_u8PressedKey = keys[Loc_u8RowNo][Loc_u8ColNo];
+      }/* if */
+    }/* for */
+  }/* if */
+  else
+  {
+    Keypad_u8PressedKey = KEYPAD_u8NO_PRESS;
+  }/* else */
+}/* Keypad_vidUpdateCurrentKey_R */
+/* /////////////////////////////////////////////////////////////////////////////////// */
