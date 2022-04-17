@@ -23,6 +23,9 @@
   #define NULL                      ((void*)0)
   /* Common initial values */
   #define ZERO_INIT                 0
+  /* Flag values */
+  #define FLAG_LOW                  0
+  #define FLAG_HIGH                 1
   /* pointer to fn */
   typedef void (* tpfCallbackFn)(void);
 #endif
