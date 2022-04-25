@@ -28,4 +28,11 @@
   #define FLAG_HIGH                 1
   /* pointer to fn */
   typedef void (* tpfCallbackFn)(void);
+  /* Buffer type */
+  typedef struct
+  {
+    pu8 Buffer;
+    u32 Size;
+    u32 Index;
+  }tstrBuffer;
 #endif

@@ -47,7 +47,7 @@
   #define DIO_u8PIN29          29
   #define DIO_u8PIN30          30
   #define DIO_u8PIN31          31
-  /* Channel levels */
+  /* Channel levels */ 
   #define DIO_u8PIN_LOW        0
   #define DIO_u8PIN_HIGH       1
   /* ************************* Return Types ************************* */

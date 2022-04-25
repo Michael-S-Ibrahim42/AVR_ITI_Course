@@ -1,44 +1,106 @@
 /* **************************************************************************************
 **       Author      :	Michael S. Ibrahim
-**       Date        :	April 15, 2022
+**       Date        :	April 18, 2022
 **       Version     :	V01
-**       SWC         :	Lab5
-**       Description :	
+**       SWC         :	Calculator
+**       Description :	Calculator Application
 ** **************************************************************************************/
-#include <avr/io.h>
-
+/* ////////////////////////// Headers inclusion /////////////////////////////////// */
+/* LIB headers */
 #include "Std_types.h"
+/* OS headers */
+#include "Sched.h"
+/* HAL headers */
+#include "Switch.h"
+#include "Keypad.h"
+#include "LCD.h"
+/* MCAL headers */
 #include "Port.h"
 #include "Dio.h"
-#include "Gpt.h"
-#include "Lab5.h"
+/* //////////////////////////////////////////////////////////////////////////////// */
 
+/* ///////////////////////////// Prototypes /////////////////////////////////////// */
+void Calculator_vidSimpleCalc_R(void);
+/* //////////////////////////////////////////////////////////////////////////////// */
+
+/* ///////////////////////////// main ///////////////////////////////////////////// */
 int main(void)
 {
-  const Gpt_ConfigType Loc_strConfig = 
+  Sched_tstrTask Loc_strRunnables[] = 
   {
-    .u8Mode           = GPT_u8MODE_NORMAL,
-    .u8CompareOutput  = GPT_u8OC0_NORMAL,
-    .u8Prescalar      = GPT_u8PRES_1024
+    [0] = 
+    {
+      .CallbackFn  = Switch_vidUpdateState_R,
+      .Priority    = 0,
+      .FirstDelay  = 0,
+      .Periodicity = 5,
+      .State       = Sched_enuReady 
+    },
+    [1] = 
+    {
+      .CallbackFn  = Keypad_vidUpdateCurrentKey_R,
+      .Priority    = 1,
+      .FirstDelay  = 1,
+      .Periodicity = 25,
+      .State       = Sched_enuReady 
+    },
+    [2] = 
+    {
+      .CallbackFn  = Calculator_vidSimpleCalc_R,
+      .Priority    = 2,
+      .FirstDelay  = 2,
+      .Periodicity = 250,
+      .State       = Sched_enuReady 
+    }
   };
   Port_vidInit();
-  Gpt_Init(&Loc_strConfig);
-  Gpt_Notification_CH0(&Test);
-  Gpt_EnableNotification(GPT_u8CH0);
-  SREG |= (1<<7);
-  Gpt_StartTimer(GPT_u8CH0, 225);
+  Sched_vidInit();
+  Sched_enuRegisterRunnable(&Loc_strRunnables[0]);
+  Sched_enuRegisterRunnable(&Loc_strRunnables[1]);
+  Sched_enuRegisterRunnable(&Loc_strRunnables[2]);
+  Sched_vidStart();
 
-  Dio_enuWriteChannel(DIO_u8PIN0, DIO_u8PIN_LOW);
-  while(1)
+  return(0);
+}/* main */
+/* //////////////////////////////////////////////////////////////////////////////// */
+
+/* ///////////////////////////// Runnable ///////////////////////////////////////// */
+void Calculator_vidSimpleCalc_R(void)
+{  
+  u8 Loc_u8Key;
+  Keypad_enuGetKey(&Loc_u8Key);
+  if(Loc_u8Key == '7')
+  {
+	  Dio_enuWriteChannel(DIO_u8PIN8, DIO_u8PIN_HIGH);
+    Dio_enuWriteChannel(DIO_u8PIN9, DIO_u8PIN_LOW);
+    Dio_enuWriteChannel(DIO_u8PIN10, DIO_u8PIN_LOW);
+    Dio_enuWriteChannel(DIO_u8PIN11, DIO_u8PIN_LOW);
+  }/* if */
+  else if(Loc_u8Key == '8')
+  {
+    Dio_enuWriteChannel(DIO_u8PIN8, DIO_u8PIN_LOW);
+    Dio_enuWriteChannel(DIO_u8PIN9, DIO_u8PIN_HIGH);
+    Dio_enuWriteChannel(DIO_u8PIN10, DIO_u8PIN_LOW);
+    Dio_enuWriteChannel(DIO_u8PIN11, DIO_u8PIN_LOW);
+  }/* else if */
+  else if(Loc_u8Key == '5')
+  {
+    Dio_enuWriteChannel(DIO_u8PIN8, DIO_u8PIN_LOW);
+    Dio_enuWriteChannel(DIO_u8PIN9, DIO_u8PIN_LOW);
+    Dio_enuWriteChannel(DIO_u8PIN10, DIO_u8PIN_HIGH);
+    Dio_enuWriteChannel(DIO_u8PIN11, DIO_u8PIN_LOW);
+  }/* else if */
+  else if(Loc_u8Key == 0)
+  {
+    Dio_enuWriteChannel(DIO_u8PIN8, DIO_u8PIN_LOW);
+    Dio_enuWriteChannel(DIO_u8PIN9, DIO_u8PIN_LOW);
+    Dio_enuWriteChannel(DIO_u8PIN10, DIO_u8PIN_LOW);
+    Dio_enuWriteChannel(DIO_u8PIN11, DIO_u8PIN_HIGH);
+  }/* else if */
+  else
   {
 
-  }
-  return(0);
-}
-void Test(void)
-{
-	static u8 state = DIO_u8PIN_HIGH;
-//
-	state ^= 0x01;
-	Dio_enuWriteChannel(DIO_u8PIN0, state);
-}
+  }/* else */
+
+}/* Test2_vidControl_R */
+/* //////////////////////////////////////////////////////////////////////////////// */

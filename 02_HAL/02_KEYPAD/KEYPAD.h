@@ -32,6 +32,8 @@
   /* Active states */
   #define KEYPAD_u8ACTIVE_HIGH                                              0
   #define KEYPAD_u8ACTIVE_LOW                                               1
+  /* No Press */
+  #define KEYPAD_u8NO_PRESS                     							((u8)0)
   /* ////////////////////////////////////////////////////////////////////////////////// */
 
   /* ///////////////////////////////// Interface Fns ////////////////////////////////// */

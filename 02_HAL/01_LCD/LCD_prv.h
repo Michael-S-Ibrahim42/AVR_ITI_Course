@@ -38,7 +38,7 @@
     #define LCD_u8DEFAULT_SMALL_CMD_DELAY       50
     /* Counter */
     #define LCD_u8CUSTOM_COUNTER_INIT           0
-    #define LCD_u8CUSTOM_COUNTER_MAX           8
+    #define LCD_u8CUSTOM_COUNTER_MAX            8
     /* String Terminator */
     #define LCD_u8NULL_CHAR                     '\0'
     /* ************************************************************************ */

@@ -45,8 +45,8 @@ int main(void)
     {
       .CallbackFn  = Test2_vidControl_R,
       .Priority    = 2,
-      .FirstDelay  = 25,
-      .Periodicity = 5,
+      .FirstDelay  = 2,
+      .Periodicity = 25,
       .State       = Sched_enuReady 
     }
   };
@@ -87,7 +87,7 @@ void Test2_vidControl_R(void)
     Dio_enuWriteChannel(DIO_u8PIN10, DIO_u8PIN_HIGH);
     Dio_enuWriteChannel(DIO_u8PIN11, DIO_u8PIN_LOW);
   }/* else if */
-  else if(Loc_u8Key == '1')
+  else if(Loc_u8Key == 0)
   {
     Dio_enuWriteChannel(DIO_u8PIN8, DIO_u8PIN_LOW);
     Dio_enuWriteChannel(DIO_u8PIN9, DIO_u8PIN_LOW);

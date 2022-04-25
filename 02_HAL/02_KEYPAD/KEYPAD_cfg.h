@@ -10,8 +10,8 @@
   /* ////////////////////////////////// MACROS ///////////////////////////////////// */
   /* Number of rows and cols */
   /* Available options are from 1 and step is 1 */
-  #define KEYPAD_u8NO_ROWS                  4
-  #define KEYPAD_u8NO_COLS                  4
+  #define KEYPAD_u8NO_ROWS                  ((u8)4)
+  #define KEYPAD_u8NO_COLS                  ((u8)4)
   /* the Connection Active state  */
   /* Available options are in "Keypad.h" under "Active states" */
   #define KEYPAD_u8ACTIVE_STATE             KEYPAD_u8ACTIVE_LOW
