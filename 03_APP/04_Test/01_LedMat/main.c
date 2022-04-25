@@ -13,7 +13,7 @@
 #include "LedMat.h"
 /* MCAL Headers */
 #include "Port.h"
-#include "Dio.h"
+
 void Test_vidOrder_R(void);
 
 /* main fn */
@@ -49,5 +49,8 @@ int main(void)
 
 void Test_vidOrder_R(void)
 {
-	LedMat_vidDispChar(LEDMAT_u8NAME_MAT, 'Y');
+//	LedMat_vidDispChar(LEDMAT_u8NAME_MAT, 'N');
+		LedMat_vidAnimString(LEDMAT_u8NAME_MAT, "MICHAEL");
+//		LedMat_vidAnimString(LEDMAT_u8NAME_MAT, "ABCDEFGHIJKLMNOPQRSTUVWXYZ");
+
 }/* Test_vidOrder_R */
