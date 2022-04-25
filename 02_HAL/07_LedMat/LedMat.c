@@ -149,22 +149,22 @@ static void LedMat_vidDisp(u8 Copy_u8MatID)
 
   for(Loc_u8ColCounter = ZERO_INIT; Loc_u8ColCounter < LEDMAT_u8COLS; Loc_u8ColCounter++)
   {
-    Dio_enuWriteChannel(LedMat_astrConn[Copy_u8MatID].u8Cols[Loc_u8ColCounter], DIO_u8PIN_LOW);
+	  Dio_enuWriteChannel(LedMat_astrConn[Copy_u8MatID].u8Cols[Loc_u8ColCounter], DIO_u8PIN_LOW);
   }/* for */
 
   if(Loc_u8Counter[Copy_u8MatID] == ZERO_INIT)
   {
-    Dio_enuWriteChannel(LedMat_astrConn[Copy_u8MatID].u8Rows[LEDMAT_u8ROWS-1], DIO_u8PIN_HIGH);
+	  Dio_enuWriteChannel(LedMat_astrConn[Copy_u8MatID].u8Rows[LEDMAT_u8ROWS-1], DIO_u8PIN_HIGH);
   }/* if */
   else
   {
     Dio_enuWriteChannel(LedMat_astrConn[Copy_u8MatID].u8Rows[Loc_u8Counter[Copy_u8MatID]-1], DIO_u8PIN_HIGH);
   }/* else */
   Dio_enuWriteChannel(LedMat_astrConn[Copy_u8MatID].u8Rows[Loc_u8Counter[Copy_u8MatID]], DIO_u8PIN_LOW);
-  
+
   for(Loc_u8ColCounter = ZERO_INIT; Loc_u8ColCounter < LEDMAT_u8COLS; Loc_u8ColCounter++)
   {
-    Dio_enuWriteChannel(LedMat_astrConn[Copy_u8MatID].u8Cols[Loc_u8ColCounter], GET_BIT(EnglishCharUC[Character[Copy_u8MatID]-'A'][Loc_u8Counter[LEDMAT_u8CONN_MAT]], Loc_u8ColCounter));
+	  Dio_enuWriteChannel(LedMat_astrConn[Copy_u8MatID].u8Cols[Loc_u8ColCounter], GET_BIT(EnglishCharUC[Character[Copy_u8MatID]-'A'][Loc_u8Counter[Copy_u8MatID]], Loc_u8ColCounter));
   }/* for */
     
   Loc_u8Counter[Copy_u8MatID]++;

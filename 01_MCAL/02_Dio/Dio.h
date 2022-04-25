@@ -51,7 +51,7 @@
   #define DIO_u8PIN_LOW        0
   #define DIO_u8PIN_HIGH       1
   /* ************************* Return Types ************************* */
-  typedef enum{
+  typedef enum{   
     Dio_Ok                  ,
     Dio_ChannelIdError      ,
     Dio_PortIdError         ,
