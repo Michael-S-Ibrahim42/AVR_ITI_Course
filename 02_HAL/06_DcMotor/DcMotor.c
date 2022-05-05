@@ -10,6 +10,7 @@
 #include "Std_types.h"
 /* MCAL headers */
 #include "Dio.h"
+#include "Pwm.h"
 /* Own headers */
 #include "DcMotor.h"
 #include "DcMotor_cfg.h"
@@ -24,7 +25,7 @@ extern DcMotor_tstrConfig DcMotor_astrMotorConfig[DCMOTOR_u8MOTOR_NUM];
   Parameter1          :           the motor(s) ID, options are in "DcMotor_cfg.h" under "Motors IDs"
   Return              :           void
 */
-void DcMotor_enuMoveRight(u8 DcMotor_u8MotorID)
+void DcMotor_vidMoveRight(u8 DcMotor_u8MotorID)
 {
   if((DcMotor_astrMotorConfig[DcMotor_u8MotorID].u8PinLeft == DCMOTOR_u8FORCED_GND) || (DcMotor_astrMotorConfig[DcMotor_u8MotorID].u8PinLeft == DCMOTOR_u8FORCED_VCC))
   {
@@ -45,7 +46,7 @@ void DcMotor_enuMoveRight(u8 DcMotor_u8MotorID)
   Parameter1          :           the motor(s) ID, options are in "DcMotor_cfg.h" under "Motors IDs"
   Return              :           void
 */
-void DcMotor_enuMoveLeft(u8 DcMotor_u8MotorID)
+void DcMotor_vidMoveLeft(u8 DcMotor_u8MotorID)
 {
   if((DcMotor_astrMotorConfig[DcMotor_u8MotorID].u8PinRight == DCMOTOR_u8FORCED_GND) || (DcMotor_astrMotorConfig[DcMotor_u8MotorID].u8PinRight == DCMOTOR_u8FORCED_VCC))
   {
@@ -66,7 +67,7 @@ void DcMotor_enuMoveLeft(u8 DcMotor_u8MotorID)
   Parameter1          :           the motor(s) ID, options are in "DcMotor_cfg.h" under "Motors IDs"
   Return              :           void
 */
-void DcMotor_enuStop(u8 DcMotor_u8MotorID)
+void DcMotor_vidStop(u8 DcMotor_u8MotorID)
 {
   if(DcMotor_astrMotorConfig[DcMotor_u8MotorID].u8PinRight != DCMOTOR_u8FORCED_GND &&
      DcMotor_astrMotorConfig[DcMotor_u8MotorID].u8PinRight != DCMOTOR_u8FORCED_VCC &&
@@ -87,12 +88,15 @@ void DcMotor_enuStop(u8 DcMotor_u8MotorID)
 }/* DcMotor_enuStop */
 /*
   Description         :           Control speed
-  Parameter1          :           the motor(s) ID, options are in "DcMotor_cfg.h" under "Motors IDs"
-  Parameter2          :
+  Parameter1          :           the motor ID, options are in "DcMotor_cfg.h" under "Motors IDs"
+  Parameter2          :           The motor speed, options are from 0 to 100 %
   Return              :           void
 */
-void DcMotor_enuControlSpeed(u8 DcMotor_u8MotorID, u8 DcMotor_u8Speed)
+void DcMotor_vidControlSpeed(u8 DcMotor_u8MotorID, u8 DcMotor_u8Speed)
 {
-
+  if(DcMotor_astrMotorConfig[DcMotor_u8MotorID].u8SpeedPin != DCMOTOR_u8DISCONNECTED)
+  {
+    Pwm_SetPeriodAndDuty(DcMotor_astrMotorConfig[DcMotor_u8MotorID].u8SpeedPin,  DcMotor_u8Speed, DCMOTOR_u8FREQ);
+  }/* if */
 }/* DcMotor_enuControlSpeed */
 /* ////////////////////////////////////////////////////////////////////////////////////////////// */

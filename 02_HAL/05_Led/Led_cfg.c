@@ -11,13 +11,16 @@
 /* MCAL headers */
 #include "Dio.h"
 /* Own headers */
-#include "H_Led.h"
-#include "H_Led_cfg.h"
+#include "Led.h"
+#include "Led_cfg.h"
 /* ******************** Configurations Variables *********************************** */
-const H_Led_tstrCfg H_Led_astrLeds[] = {
-  [H_LED_u8BLUE] = {
+Led_strCfg_t Led_astrLeds[] = {
+  [LED_u8BLUE] = {
     .Pin          = DIO_u8PIN0,       
-    .ActiveState  = H_LED_u8HIGH_ACTIVE_STATE,     
+    .ActiveState  = LED_u8ACTIVE_HIGH_STATE,     
+    .Request      = Led_enuReq_Idle,
+    .State        = ZERO_INIT,
+    .LedCounter   = ZERO_INIT
   },
 };
 /* ********************************************************************************* */

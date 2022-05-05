@@ -58,7 +58,7 @@
     /* ************************* Fns Prototypes ************************* */
   Port_tenuStatus Port_enuSetPinDirection(u8 Copy_u8PinNumber, u8 Copy_u8PinDirection);
   Port_tenuStatus Port_enuSetPinMode(u8 Copy_u8PinNumber, u8 Copy_u8PinMode);
-  void Port_vidInit (void);
+  void Port_vidInit(void);
 
 
 #endif
