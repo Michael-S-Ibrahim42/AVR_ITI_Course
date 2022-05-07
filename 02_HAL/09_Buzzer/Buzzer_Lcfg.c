@@ -18,10 +18,9 @@
 Buzzer_strCfg_t Buzzer_astrBuzzers[] = {
   [BUZZER_u8SONG] = {
     .Pin             = DIO_u8PIN0,     
-    .PwmChannel      = PWM_u8CHANNEL1A,  
-    .ActiveState     = Buzzer_u8ACTIVE_HIGH_STATE,     
+    .PwmChannel      = PWM_u8CHANNEL1A,
+    .ActiveState     = BUZZER_u8ACTIVE_HIGH_STATE,
     .Request         = Buzzer_enuReq_Idle,
-    .Status          = Buzzer_enuStatus_Ready,
     .BuzzerCounter   = ZERO_INIT
   }
 };

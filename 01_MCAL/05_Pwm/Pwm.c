@@ -45,7 +45,7 @@ void Pwm_Init(const Pwm_ConfigType* ConfigPtr)
         TCCR1B |= (ConfigPtr[Loc_u8Counter].u32Prescalar & 0x7);
         break;
       case(PWM_u8CHANNEL1B):
-        TCCR1A = (1<<1) | (1<<5) | ((ConfigPtr[Loc_u8Counter].u8Idle) << 4);
+        TCCR1A  = (1<<1) | (1<<5) | ((ConfigPtr[Loc_u8Counter].u8Idle) << 4);
         TCCR1B &= ~(0x7);
         TCCR1B |= (3<<3);
         TCCR1B |= (ConfigPtr[Loc_u8Counter].u32Prescalar & 0x7);
@@ -87,9 +87,9 @@ void Pwm_SetPeriodAndDuty(u8 Copy_u8ChannelId,  f32 Copy_f32Duty, u8 Copy_u8Peri
       ICR1    = Loc_u16Top;
     break;
   case(PWM_u8CHANNEL1B):
-      TCCR1A = (1<<1) | (1<<5) | (Loc_u8Idle << 4);
+      TCCR1A  = (1<<1) | (1<<5) | (Loc_u8Idle << 4);
       OCR1B   = (u16)((((u32)Loc_u16Top+1) * Copy_f32Duty) / 100);
-      ICR1    = Loc_u16Top;
+      ICR1   = Loc_u16Top;
     break;
   default:
     /* MISRA */
