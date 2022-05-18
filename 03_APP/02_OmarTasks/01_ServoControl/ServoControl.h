@@ -8,3 +8,4 @@
 #ifndef _SERVOCONTROL_H
 #define _SERVOCONTROL_H
 	void AdcTest_vidControlServo(void);
+#endif
