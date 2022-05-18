@@ -37,7 +37,7 @@
   #define DIO_u8PIN19          19
   #define DIO_u8PIN20          20
   #define DIO_u8PIN21          21
-  #define DIO_u8PIN22          22
+  #define DIO_u8PIN22          22  
   #define DIO_u8PIN23          23
   #define DIO_u8PIN24          24
   #define DIO_u8PIN25          25
